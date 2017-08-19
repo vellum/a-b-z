@@ -31,49 +31,41 @@ void ofApp::draw(){
     ofConePrimitive cone;
     cone.set(5, 5, 4, 4);
     
-    
     cam.begin();
     ofRotateX(180+45);
-    //ofRotateX(45);
     ofRotateY(45);
-    ofBackground( 255 );
+    ofBackground( 220 );
     ofNoFill();
-    ofSetColor(100);
+    
     
     for (int j = -5; j <= 5; j++){
         for (int i = -5; i <= 5; i++){
             float h = ofMap(sin(ofGetElapsedTimef()), -1, 1, ofMap(sin(ofGetElapsedTimef()), -1, 1, 5, 15), 25+i*j*0.025*ofGetElapsedTimef());
-            //float h = ofMap(sin(ofGetElapsedTimef()), -1, 1, ofMap(sin(ofGetElapsedTimef()), -1, 1, 5, 15), 25+abs(sin(i*j+ofGetElapsedTimef())*i*j));
-            
-            h = abs(h);
+            h = MIN(abs(h), 50);
+            //h = log(h*1000);
             cone.setHeight(h);
             ofPushMatrix();
             ofTranslate(i*7, -h, j*7);
             ofRotateY(45);
+            ofSetColor(255);
             cone.getConeMesh().drawWireframe();
+            
+            ofSetColor(100);
+            ofTranslate(0, -20, 0);
+            ofPushStyle();
+            //ofSetColor(255,0,0);
+            ofDrawBitmapString(ofToString(round(h)), 0, 0, 0);
+            ofPopStyle();
             ofPopMatrix();
         }
     }
     
-    
     cam.end();
     //drawInteractionArea();
     ofSetColor(255);
-    string msg = string("");//string("Using mouse inputs to navigate (press 'c' to toggle): ") + (cam.getMouseInputEnabled() ? "YES" : "NO");
-    //msg += string("\nShowing help (press 'h' to toggle): ")+ (bShowHelp ? "YES" : "NO");
-    if (bShowHelp) {
-        
-        /*
-        msg += "\n\nLEFT MOUSE BUTTON DRAG:\nStart dragging INSIDE the yellow circle -> camera XY rotation .\nStart dragging OUTSIDE the yellow circle -> camera Z rotation (roll).\n\n";
-        msg += "LEFT MOUSE BUTTON DRAG + TRANSLATION KEY (" + ofToString(cam.getTranslationKey()) + ") PRESSED\n";
-        msg += "OR MIDDLE MOUSE BUTTON (if available):\n";
-        msg += "move over XY axes (truck and boom).\n\n";
-        msg += "RIGHT MOUSE BUTTON:\n";
-        msg += "move over Z axis (dolly)";
-         */
-    }
-    msg += "\n\nfps: " + ofToString(ofGetFrameRate(), 2);
+    string msg = "fps: " + ofToString(ofGetFrameRate(), 2);
     ofDrawBitmapStringHighlight(msg, 10, 20);
+    
 }
 
 //--------------------------------------------------------------
