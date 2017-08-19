@@ -33,10 +33,12 @@ void ofApp::draw(){
     
     
     cam.begin();
-    ofRotateX(180+15);
-    ofBackground( 246, 246, 238 );
+    ofRotateX(180+45);
+    //ofRotateX(45);
+    ofRotateY(45);
+    ofBackground( 255 );
     ofNoFill();
-    ofSetColor(0,0,0);
+    ofSetColor(100);
     
     for (int j = -5; j <= 5; j++){
         for (int i = -5; i <= 5; i++){
@@ -55,17 +57,20 @@ void ofApp::draw(){
     
     
     cam.end();
-    drawInteractionArea();
+    //drawInteractionArea();
     ofSetColor(255);
-    string msg = string("Using mouse inputs to navigate (press 'c' to toggle): ") + (cam.getMouseInputEnabled() ? "YES" : "NO");
-    msg += string("\nShowing help (press 'h' to toggle): ")+ (bShowHelp ? "YES" : "NO");
+    string msg = string("");//string("Using mouse inputs to navigate (press 'c' to toggle): ") + (cam.getMouseInputEnabled() ? "YES" : "NO");
+    //msg += string("\nShowing help (press 'h' to toggle): ")+ (bShowHelp ? "YES" : "NO");
     if (bShowHelp) {
+        
+        /*
         msg += "\n\nLEFT MOUSE BUTTON DRAG:\nStart dragging INSIDE the yellow circle -> camera XY rotation .\nStart dragging OUTSIDE the yellow circle -> camera Z rotation (roll).\n\n";
         msg += "LEFT MOUSE BUTTON DRAG + TRANSLATION KEY (" + ofToString(cam.getTranslationKey()) + ") PRESSED\n";
         msg += "OR MIDDLE MOUSE BUTTON (if available):\n";
         msg += "move over XY axes (truck and boom).\n\n";
         msg += "RIGHT MOUSE BUTTON:\n";
         msg += "move over Z axis (dolly)";
+         */
     }
     msg += "\n\nfps: " + ofToString(ofGetFrameRate(), 2);
     ofDrawBitmapStringHighlight(msg, 10, 20);
@@ -80,7 +85,7 @@ void ofApp::drawInteractionArea(){
     
     ofPushStyle();
     ofSetLineWidth(3);
-    ofSetColor(255, 255, 0);
+    ofSetColor(200);
     ofNoFill();
     glDepthMask(false);
     ofDrawCircle(x, y, r);
